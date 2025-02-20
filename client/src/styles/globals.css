@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Poppins:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+@layer components {
+  .stats-value {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, #1a365d 0%, #2c7a7b 100%);
+}
+
+.hover-card {
+  @apply transition-transform duration-300 hover:-translate-y-2;
+}
+
+.section-padding {
+  @apply py-16 md:py-24;
+} 
