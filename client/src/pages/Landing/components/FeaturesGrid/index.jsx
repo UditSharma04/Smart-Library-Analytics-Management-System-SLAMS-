@@ -1,42 +1,56 @@
 import { motion } from 'framer-motion'
 import Container from '../../../../components/common/Container'
+import {
+  QrCodeIcon,
+  ChartBarIcon,
+  ShieldCheckIcon,
+  DevicePhoneMobileIcon,
+  MapIcon,
+  BellAlertIcon
+} from '@heroicons/react/24/outline'
 
 const features = [
   {
-    icon: '🔄',
+    icon: QrCodeIcon,
     title: 'Self-Service Kiosks',
     description: 'Quick and easy checkout process with QR code scanning',
-    stat: '2 min average checkout time'
+    stat: '2 min average checkout time',
+    color: 'bg-blue-500'
   },
   {
-    icon: '📊',
+    icon: ChartBarIcon,
     title: 'Real-time Analytics',
     description: 'Track library usage and optimize resource allocation',
-    stat: 'Live occupancy tracking'
+    stat: 'Live occupancy tracking',
+    color: 'bg-green-500'
   },
   {
-    icon: '🔒',
+    icon: ShieldCheckIcon,
     title: 'Smart Security',
     description: 'Advanced RFID tracking and automated exit verification',
-    stat: '99.9% accuracy rate'
+    stat: '99.9% accuracy rate',
+    color: 'bg-purple-500'
   },
   {
-    icon: '📱',
+    icon: DevicePhoneMobileIcon,
     title: 'Mobile Integration',
     description: 'Access library services from your smartphone',
-    stat: '10k+ active users'
+    stat: '10k+ active users',
+    color: 'bg-pink-500'
   },
   {
-    icon: '🎯',
+    icon: MapIcon,
     title: 'Resource Tracking',
     description: 'Monitor book locations and availability in real-time',
-    stat: 'Instant book locator'
+    stat: 'Instant book locator',
+    color: 'bg-yellow-500'
   },
   {
-    icon: '📨',
+    icon: BellAlertIcon,
     title: 'Smart Notifications',
     description: 'Automated reminders and updates for due dates',
-    stat: 'Zero overdue books'
+    stat: 'Zero overdue books',
+    color: 'bg-red-500'
   }
 ]
 
@@ -58,32 +72,27 @@ export default function FeaturesGrid() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => (
             <motion.div
-              key={index}
+              key={feature.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              whileHover={{ scale: 1.02 }}
-              className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
+              className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow"
             >
-              <div className="flex items-start space-x-4">
-                <div className="text-4xl">{feature.icon}</div>
-                <div>
-                  <h3 className="text-xl font-heading font-semibold text-primary mb-2">
-                    {feature.title}
-                  </h3>
-                  <p className="text-gray-600 mb-4">
-                    {feature.description}
-                  </p>
-                  <div className="inline-block bg-primary/10 px-3 py-1 rounded-full">
-                    <span className="text-sm font-medium text-primary">
-                      {feature.stat}
-                    </span>
-                  </div>
-                </div>
+              <div className={`w-12 h-12 ${feature.color} bg-opacity-10 rounded-lg flex items-center justify-center mb-4`}>
+                <feature.icon className={`w-6 h-6 ${feature.color.replace('bg-', 'text-')}`} />
+              </div>
+              <h3 className="text-xl font-heading font-semibold text-gray-800 mb-2">
+                {feature.title}
+              </h3>
+              <p className="text-gray-600 mb-4">
+                {feature.description}
+              </p>
+              <div className="text-sm font-medium text-primary">
+                {feature.stat}
               </div>
             </motion.div>
           ))}
@@ -96,11 +105,11 @@ export default function FeaturesGrid() {
           transition={{ delay: 0.6 }}
           className="mt-16 text-center"
         >
-          <div className="inline-block bg-accent/10 px-6 py-2 rounded-full">
+          {/* <div className="inline-block bg-accent/10 px-6 py-2 rounded-full">
             <span className="text-accent font-semibold">
               Trusted by Leading Educational Institutions
             </span>
-          </div>
+          </div> */}
         </motion.div>
       </Container>
     </section>

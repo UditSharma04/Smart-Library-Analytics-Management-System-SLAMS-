@@ -2,8 +2,15 @@ import mongoose from 'mongoose'
 import Student from '../models/Student.js'
 import bcrypt from 'bcryptjs'
 import dotenv from 'dotenv'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
-dotenv.config()
+// Fix __dirname in ES modules
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+// Load env variables
+dotenv.config({ path: path.join(__dirname, '../.env') })
 
 const dummyStudents = [
   {
@@ -51,12 +58,53 @@ const dummyStudents = [
   }))
 ]
 
+export const setsData = [
+  {
+    book: '/* book_id_here */',
+    totalUnits: 5,
+    unitCodes: [
+      {
+        code: 'SS101-001',
+        rfid: 'RF101001',
+        status: 'available',
+        condition: 'good',
+        location: {
+          shelf: 'A1',
+          row: '1',
+          section: 'Social Studies'
+        }
+      },
+      {
+        code: 'SS101-002',
+        rfid: 'RF101002',
+        status: 'available',
+        condition: 'good',
+        location: {
+          shelf: 'A1',
+          row: '1',
+          section: 'Social Studies'
+        }
+      },
+      // ... more units
+    ]
+  },
+  // ... more sets
+]
+
 async function seedDatabase() {
   try {
+    // Verify MongoDB URI
+    if (!process.env.MONGODB_URI) {
+      throw new Error('MONGODB_URI is not defined in environment variables')
+    }
+
+    // Connect to MongoDB
     await mongoose.connect(process.env.MONGODB_URI)
+    console.log('Connected to MongoDB')
     
     // Clear existing data
     await Student.deleteMany({})
+    console.log('Cleared existing students')
     
     // Hash passwords and insert data
     const hashedStudents = await Promise.all(
@@ -68,6 +116,12 @@ async function seedDatabase() {
     
     await Student.insertMany(hashedStudents)
     console.log('Database seeded successfully')
+
+    // Log sample data
+    const sampleStudent = await Student.findOne().select('-password')
+    console.log('\nSample Student Data:')
+    console.log(JSON.stringify(sampleStudent, null, 2))
+
     process.exit(0)
   } catch (error) {
     console.error('Error seeding database:', error)
@@ -75,4 +129,5 @@ async function seedDatabase() {
   }
 }
 
+// Run the seed function
 seedDatabase() 

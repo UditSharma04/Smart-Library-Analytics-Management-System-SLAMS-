@@ -2,8 +2,8 @@ import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
-import vitcLogo from '../../assets/vitc.jpeg'
-import axios from '../../utils/axios'
+import vitcLogo from '../../../public/Vellore_Institute_of_Technology_seal_2017.svg.png'
+import axios from '../../axios'
 
 export default function Login() {
   const navigate = useNavigate()
@@ -21,35 +21,22 @@ export default function Login() {
     })
   }
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault()
-    setLoading(true)
-    
     try {
-      const response = await axios.post('/auth/login', formData)
-      
-      toast.success('Login successful!', {
-        duration: 3000,
-        position: 'top-right'
+      const { data } = await axios.post('/auth/login', {
+        registerNumber: formData.registerNumber,
+        password: formData.password
       })
       
-      localStorage.setItem('token', response.data.token)
-      localStorage.setItem('user', JSON.stringify(response.data.student))
+      console.log('Login response:', data)
+      localStorage.setItem('token', data.token)
+      localStorage.setItem('user', JSON.stringify(data.user))
       
-      setTimeout(() => {
-        navigate('/dashboard')
-      }, 1000)
-      
+      navigate('/dashboard')
     } catch (error) {
-      toast.error(
-        error.response?.data?.message || 'Login failed', 
-        {
-          duration: 4000,
-          position: 'top-right'
-        }
-      )
-    } finally {
-      setLoading(false)
+      console.error('Login error:', error)
+      toast.error(error.response?.data?.message || 'Login failed')
     }
   }
 
@@ -77,7 +64,7 @@ export default function Login() {
           </div>
 
           {/* Login Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleLogin} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Registration Number

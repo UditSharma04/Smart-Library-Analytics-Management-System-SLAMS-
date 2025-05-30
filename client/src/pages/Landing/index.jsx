@@ -1,21 +1,26 @@
+import { motion } from 'framer-motion'
 import HeroSection from './components/HeroSection'
 import FeaturesShowcase from './components/FeaturesShowcase'
-import UserBenefits from './components/UserBenefits'
 import InteractiveDemo from './components/InteractiveDemo'
-import AnalyticsDashboard from './components/AnalyticsDashboard'
+import NavigationPreview from './components/NavigationPreview'
 import FeaturesGrid from './components/FeaturesGrid'
-import CallToAction from './components/CallToAction'
+import AnalyticsDashboard from './components/AnalyticsDashboard'
 
 export default function Landing() {
   return (
     <main className="min-h-screen bg-gray-50">
       <HeroSection />
-      <FeaturesShowcase />
-      <UserBenefits />
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+      >
+        <FeaturesShowcase />
+      </motion.div>
+      <NavigationPreview />
       <InteractiveDemo />
-      <AnalyticsDashboard />
       <FeaturesGrid />
-      <CallToAction />
+      <AnalyticsDashboard />
     </main>
   )
 } 

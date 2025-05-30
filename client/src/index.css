@@ -19,6 +19,35 @@
   .stats-value {
     font-family: 'JetBrains Mono', monospace;
   }
+
+  .custom-scrollbar {
+    @apply overflow-y-auto;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    @apply w-1.5;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded-full;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400;
+  }
+
+  /* Hide scrollbar by default, show on hover */
+  .custom-scrollbar.hide-scrollbar::-webkit-scrollbar {
+    @apply w-0;
+  }
+
+  .custom-scrollbar.hide-scrollbar:hover::-webkit-scrollbar {
+    @apply w-1.5;
+  }
 }
 
 .gradient-bg {
@@ -56,4 +85,55 @@
 
 .group-hover\:opacity-100 {
   transition-delay: 100ms;
+}
+
+/* Add these styles to fix QR scanner appearance */
+#qr-reader {
+  width: 100% !important;
+  border: none !important;
+  background: white !important;
+}
+
+#qr-reader__scan_region {
+  min-height: 300px !important;
+}
+
+#qr-reader__dashboard {
+  padding: 0 !important;
+}
+
+#qr-reader__dashboard button {
+  background: #4F46E5 !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 0.5rem !important;
+  padding: 0.5rem 1rem !important;
+  cursor: pointer !important;
+}
+
+/* Admin Dashboard Styles */
+.stat-card {
+  @apply bg-gray-800 rounded-xl p-6 border border-gray-700;
+  background-image: linear-gradient(to bottom right, rgba(59, 130, 246, 0.05), transparent);
+}
+
+.admin-card {
+  @apply bg-gray-800 rounded-xl p-6 border border-gray-700;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+/* Chart Customizations */
+.chart-container {
+  @apply relative;
+  height: 300px !important;
+}
+
+/* Ensure charts maintain aspect ratio */
+canvas {
+  @apply !h-full !w-full;
+}
+
+/* Chart parent containers */
+.admin-card > div {
+  min-height: 300px;
 }
