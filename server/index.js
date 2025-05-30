@@ -31,16 +31,25 @@ const corsOptions = {
     if (!origin) return callback(null, true)
     
     const allowedOrigins = process.env.CORS_ORIGINS ? 
-      process.env.CORS_ORIGINS.split(',') : 
+      process.env.CORS_ORIGINS.split(',').map(origin => origin.trim()) : 
       ['http://localhost:5173', 'http://localhost:3000']
+    
+    console.log('🌐 CORS Check:', {
+      requestOrigin: origin,
+      allowedOrigins: allowedOrigins,
+      isAllowed: allowedOrigins.indexOf(origin) !== -1
+    })
     
     if (allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true)
     } else {
-      callback(new Error('Not allowed by CORS'))
+      console.error('❌ CORS Error: Origin not allowed:', origin)
+      callback(new Error(`Not allowed by CORS. Origin: ${origin}`))
     }
   },
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   optionsSuccessStatus: 200
 }
 
